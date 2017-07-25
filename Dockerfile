@@ -10,7 +10,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN     apt-get -y install software-properties-common
 RUN     add-apt-repository -y ppa:chris-lea/node.js
 RUN     apt-get -y update
-RUN     apt-get -y install python-django-tagging python-simplejson python-memcache python-ldap python-cairo python-pysqlite2 python-support \
+RUN     apt-get -y install libffi-dev python-django-tagging python-simplejson python-memcache python-ldap python-cairo python-pysqlite2 python-support \
                            python-pip gunicorn supervisor nginx-light nodejs git wget curl openjdk-7-jre build-essential python-dev
 
 RUN     pip install Twisted==11.1.0 Django==1.5 pytz
@@ -20,17 +20,17 @@ RUN     npm install ini chokidar
 RUN     mkdir /src
 RUN     git clone https://github.com/graphite-project/whisper.git /src/whisper            &&\
         cd /src/whisper                                                                   &&\
-        git checkout 0.9.x                                                                &&\
+        git checkout 1.0.2                                                                &&\
         python setup.py install
 
 RUN     git clone https://github.com/graphite-project/carbon.git /src/carbon              &&\
         cd /src/carbon                                                                    &&\
-        git checkout 0.9.x                                                                &&\
+        git checkout 1.0.2                                                                &&\
         python setup.py install
 
 RUN     git clone https://github.com/graphite-project/graphite-web.git /src/graphite-web  &&\
         cd /src/graphite-web                                                              &&\
-        git checkout 0.9.x                                                                &&\
+        git checkout 1.0.2                                                                &&\
         python setup.py install
 
 # Install StatsD
@@ -41,7 +41,7 @@ RUN     git clone https://github.com/etsy/statsd.git /src/statsd                
 # Install Grafana
 RUN     mkdir /src/grafana                                                                                    &&\
         mkdir /opt/grafana                                                                                    &&\
-        wget https://grafanarel.s3.amazonaws.com/builds/grafana-2.5.0.linux-x64.tar.gz -O /src/grafana.tar.gz &&\
+        wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.1.linux-x64.tar.gz -O /src/grafana.tar.gz &&\
         tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1                                     &&\
         rm /src/grafana.tar.gz
 
